@@ -1,3 +1,10 @@
+
+import math
+import os
+import random
+import re
+import sys
+
 def isBalanced(s):
     stack = []
     matching_bracket = {')': '(', '}': '{', ']': '['}
@@ -7,11 +14,14 @@ def isBalanced(s):
             stack.append(char)
         elif char in matching_bracket:
             if stack and stack[-1] == matching_bracket[char]:
-                stack.pop()  
+                stack.pop()
             else:
-                return "NO"  
+                return "NO"
+
     return "YES" if not stack else "NO"
-n = int(input())  # The number of strings
+
+
+n = int(input())  
 for _ in range(n):
-    s = input()  # Each sequence of brackets
+    s = input().strip()  
     print(isBalanced(s))
