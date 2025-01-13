@@ -1,0 +1,28 @@
+def twoStacks(maxSum, a, b):
+    i = 0  
+    j = 0 
+    current_sum = 0
+    max_count = 0
+    
+    while i < len(a) and current_sum + a[i] <= maxSum:
+        current_sum += a[i]
+        i += 1
+    max_count = i
+
+    while j < len(b):
+        current_sum += b[j]
+        j += 1
+        while current_sum > maxSum and i > 0:
+            i -= 1
+            current_sum -= a[i]
+        max_count = max(max_count, i + j)
+    
+    return max_count
+t = int(input())  
+
+for _ in range(t):
+    n, m, maxSum = map(int, input().split())
+    a = list(map(int, input().split()))
+    b = list(map(int, input().split()))
+  
+    print(twoStacks(maxSum, a, b))
