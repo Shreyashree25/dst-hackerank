@@ -1,45 +1,50 @@
-class QueueWithTwoStacks:
+class QueueUsingTwoStacks:
     def __init__(self):
-        self.stack1 = [] 
-        self.stack2 = []  
-
+        self.in_stack = []
+        self.out_stack = []
+    
     def enqueue(self, x):
-        self.stack1.append(x)
-
+        self.in_stack.append(x)
+    
     def dequeue(self):
-  
-        if not self.stack2:
-            while self.stack1:
-                self.stack2.append(self.stack1.pop())
-        if self.stack2:
-            return self.stack2.pop()
-        return None 
-
-    def front(self):
-        if not self.stack2:
-            while self.stack1:
-                self.stack2.append(self.stack1.pop())
-        if self.stack2:
-            return self.stack2[-1]
+        if not self.out_stack:
+            while self.in_stack:
+                self.out_stack.append(self.in_stack.pop())
+        
+        if self.out_stack:
+            return self.out_stack.pop()
+        return None
+    
+    def print_front(self):
+        if not self.out_stack:
+            while self.in_stack:
+                self.out_stack.append(self.in_stack.pop())
+        
+        if self.out_stack:
+            return self.out_stack[-1]
         return None  
-def process_queries(n, queries):
-    queue = QueueWithTwoStacks()
-    result = []
+
+def process_queries(queries):
+    queue = QueueUsingTwoStacks()
     
     for query in queries:
-        query_parts = query.split()
-        query_type = int(query_parts[0])
+        parts = query.split()
+        type_of_query = int(parts[0])
         
-        if query_type == 1:
-            x = int(query_parts[1])
+        if type_of_query == 1:
+            x = int(parts[1])
             queue.enqueue(x)
-        elif query_type == 2:
+        elif type_of_query == 2:
             queue.dequeue()
-        elif query_type == 3:
-            result.append(queue.front())
-    return result
-n = int(input())
-queries = [input().strip() for _ in range(n)]
-result = process_queries(n, queries)
-for res in result:
-    print(res)
+        elif type_of_query == 3:
+            front = queue.print_front()
+            if front is not None:
+                print(front)
+
+if __name__ == "__main__":
+    q = int(input().strip())
+    queries = []
+    for _ in range(q):
+        queries.append(input().strip())
+    
+    process_queries(queries)
